@@ -1,0 +1,79 @@
+<main>
+    <% if(locals.empDetail){ %>
+
+        <%# Model 
+        # shows the list of employees to ask / cancel the feedback request
+        %>
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Ask feedback about <%= empDetail.name %> </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="ask-feedback-body">
+                    <ul class="list-group" id="feedback-giver-list" data-id="<%=empDetail.id%>">
+                        <% for( let index = 0; index < empDetail.company.employees.length; index++ ) { %>
+                            <li class="list-group-item d-flex justify-content-between" data-id="<%= empDetail.company.employees[index].id %>" > 
+                                <span> <%= empDetail.company.employees[index].name %> </span> 
+                                <% if (empDetail.company.employees[index].feedbackPending.includes(empDetail.id)) { %>
+                                    <button class="btn btn-secondary cancel-feedback-btn" type="button">Cancel</button>
+                                <% } else { %>
+                                    <button class="btn btn-success ask-feedback-btn" type="button">Ask</button>
+                                <% } %>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <%# employee details
+        # shows the employee details (name, email, type, rank and company)
+         %>
+        <div class="border rounded">
+            <div class="ps-3 border" >
+                <div id="employee-name"> <span>name: </span>  <span> <%= empDetail.name %> </span></div>
+                <div id="employee-email"> <span>email: </span>  <span> </span><%= empDetail.email %> </span></div>
+                <div id="employee-type"> <span>type: </span>  <span> </span><%= empDetail.type %></span></div>
+                <% if (empDetail.type == 'admin') { %>
+                    <div id="employee-adminRank"> <span>adminRank: </span>  <span> </span><%= empDetail.adminRank %> </span></div>
+                <% } %>
+                <div id="employee-company" > <span>company: </span>  <span> </span> <%= empDetail.company.name %></span></div>
+                <div id="employee-rating"> <span>rating: </span>  <span> </span> <%= empDetail.rating %> (<%= empDetail.feedbackRecieved.length %>)</span></div>
+
+            </div>
+            <div class="m-3 d-flex justify-content-evenly">
+                <button type="button" class="btn btn-success" id="assign-feedback-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> Ask for feedbacks </button>
+                <button type="button" class="btn btn-danger" id="delete-employee-btn" data-id="<%= empDetail._id %>">Delete Employee</button>
+            </div>
+
+            <%# recieved feedbacks
+            # show the list of feedbaks with giver name and rating with log message (feedback)
+             %>
+            <div class="m-3">
+                <h3>Feedback Recieved</h3>
+                <% for( let index = 0; index < empDetail.feedbackRecieved.length; index++ ) { %>
+                    <div class="row">
+                        <div class="col-12 border rounded m-1 container">
+                          <p class="mb-0"><strong><%= empDetail.feedbackRecieved[index].sender.name %></strong> <span class="text-muted">(Rating: <%= empDetail.feedbackRecieved[index].rating %>/5)</span></p>
+                          <p class="mb-3"><%= empDetail.feedbackRecieved[index].log %></p>
+                        </div>
+                    </div>
+                      
+                <% } %>
+            </div>
+        </div>
+        
+
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="/js/employee_review.js"></script>
+
+    <% } else { %>
+        <div class="alert alert-danger" role="alert">
+            unable to get Employee details
+        </div>
+    <% } %>
+</main>

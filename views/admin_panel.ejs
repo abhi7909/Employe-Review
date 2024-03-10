@@ -1,0 +1,35 @@
+<%# # shows the list of employees with toggle button to make admin or demote to employee # if any employee is not
+    present we show 'No employee Available' %>
+
+    <main>
+
+        <div id="warning-by-server"></div>
+
+        <% if(locals.employeesArr.length > 0) { %> 
+    <ul class="list-group" id="employee-list">
+      
+        <% for( let index = 0; index < employeesArr.length; index++ ) { %>
+            <li class="list-group-item d-flex justify-content-between employee-list-item" id="<%= employeesArr[index].id %>">
+                <span><%= employeesArr[index].name %> </span>
+
+                <% if (employeesArr[index].type == 'admin') { %>
+                    <button type="button" class="btn btn-secondary make-employee-btn"> make Employee </button>
+                <% } else { %>
+                    <button type="button" class="btn btn-primary make-admin-btn"> make Admin </button>
+                <% } %>
+
+            </li>
+        <% } %>
+
+        <script src="/js/admin_panel.js"></script>
+    </ul>
+
+<% } else { %>
+    <div class="card" style="width: 95vw; height: 95vh;">
+        <div class="card-body">
+          <p class="card-text"> No Employees Available</p>
+        </div>
+      </div>
+<% } %>
+
+</main>

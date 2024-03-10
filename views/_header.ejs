@@ -1,0 +1,48 @@
+<%# header which holds the name of (website) if user is not logged in show links of signup, signin and create company if
+    user is logged in show signout link if admin=true or employee=true we show admin panel and employee view links
+    respectively %>
+
+    <header id="main-header">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Employee Review System</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <% if(!locals.user) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signup">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/signin">Sign In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/create-company">Create Company</a>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" href="/signout">Sign Out</a>
+                        </li>
+
+                        <%if(locals.admin) {%>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary" href="/user/admin">Admin Panel</a>
+                            </li>
+                        <% } %>
+
+                        <%if(locals.employee) {%>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary" href="/user/employee">Employee View</a>
+                            </li>
+                        <% } %>
+            
+                    <%}%>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,48 @@
+<%# # signup form for employee # check if companies are registed or not # if not we force to create company %>
+
+    <main>
+
+        <% if(locals.company) { %>
+
+        <div id="warnings-by-server">
+
+        </div>
+
+
+        <div class="card text-center" style="width: 25rem; margin: auto;">
+            <div class="card-body">
+                <h5 class="card-title">Sign up</h5>
+                <p class="card-text">
+                <form id="create_employee_form"> 
+                    <div class="mb-3">
+                        <select class="form-select" name="company">
+                            <% for(let com of company) { %>
+                                <option value="<%= com.name %>"> <%= com.name %> </option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <input type="text" class="form-control mb-3" name="name" placeholder="name" required>
+                    <input type="email" class="form-control mb-3" name="email" placeholder="email" required>
+                    <input type="password" class="form-control mb-3" name="password" placeholder="password" required>
+                    <input type="password" class="form-control mb-3" name="cpassword" placeholder="Confirm password"
+                        required>
+    
+                    <button type="submit" class="btn btn-primary mb-3">signup</button>
+                </form>
+                </p>
+            </div>
+        </div>
+
+        <script src="/js/create_employee.js"></script>
+
+
+    <%} else { %>
+
+        <div class="alert alert-danger" role="alert">
+            At the movement there is no company registered with us <br>
+            creating employee without company is useless <br >
+            <a href="/create-company" class="btn btn-primary my-3">create company</a>
+        </div>
+
+    <%}%>
+</main>
