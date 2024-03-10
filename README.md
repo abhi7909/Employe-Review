@@ -25,7 +25,7 @@ To install all the dependences of the project, run the following command:
 
 
 #### Deployment Link:
- - Link : https://Employe-Review.vercel.app/
+ - Link : https://employe-review.vercel.app/
 
 
 
